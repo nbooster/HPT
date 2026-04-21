@@ -10,3 +10,25 @@ Header Only High Precision Timer Lib for effortless, on the fly, execution time 
 6. Standalone and header only (only a C++ 20 supporting compiler needed without any extra dependencies).
 7. Full stat results (totals, min, median, max, avg, std, 90th, 99th).
 8. Option to stop and restart the timer inside the code block, and also reset the stats.
+
+## Simplest Example Usage
+```cpp
+#include "HPT.hpp"
+
+void DummyFunction(size_t N)
+{
+  HPT::Timer T("DummyFunction");
+
+  // any code here...
+}
+
+int main(void)
+{
+  for ( size_t index{}; index < 1'000'000; ++index )
+    DummyFunction(index);
+
+  HPT::PrintResults();
+
+  std::exit(EXIT_SUCCESS);
+}
+```
