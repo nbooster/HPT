@@ -12,6 +12,16 @@ Header Only High Precision Timer Lib for effortless, on the fly, execution time 
 8. Option to stop and restart the timer inside the code block, and also reset the stats.
 9. Easily turn off the measurements by simply defining the TURN_OFF_MEASUREMENTS constant before including the library.
 
+## API
+```cpp
+explicit Timer(const std::string& name = "Generic") noexcept;
+void start(void) noexcept;
+void stopAndRecord(void);
+static void ClearMeasurements(const std::string& name = "Generic");
+static void ClearAllMeasurements(void);
+static void PrintResults(const size_t cpuSpeedInMGHz = 0, const size_t zeroCodeCycles = 0, std::ostream& os = std::cout, const bool printNotes = true);
+'''
+
 ## Simplest Example Usage
 ```cpp
 // #define TURN_OFF_MEASUREMENTS
