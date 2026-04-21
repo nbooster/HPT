@@ -46,3 +46,16 @@ int main(void)
   std::exit(EXIT_SUCCESS);
 }
 ```
+
+## Notes
+1. To get the measurements also in nanoseconds, please provide the positive 'cpuSpeedInMGHz' argument in 'PrintResults' (assuming CPU has invariant TSC support).
+2. For more accurate results:
+   1. Do not perform nested measurements.
+   2. Measure only from one thread.
+   3. Provide the 'zeroCodeCycles' (measurement of an empty code block) argument in 'PrintResults'.
+   4. Measure as few code blocks as possible at the same time.
+   5. Keep the measured block names as short as possible (SSO).
+   6. Disable hyperthreading.
+   7. Disable turbo boost and force the 'performance' governor.
+   8. Make sure the measuring thread has the highest priority and is pinned to an isolated CPU core throughout the measuring period.
+   9. Keep running your benchmarks on the same core for consistency.
