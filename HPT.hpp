@@ -38,10 +38,12 @@ using TimerHMapType = std::unordered_map<std::string, std::unordered_map<size_t,
 
     asm volatile
     (
-        "lfence\n\t"
+        "cpuid\n\t"
         "rdtsc\n\t"
         "lfence\n\t"
         : "=a"(lo), "=d"(hi)
+        :
+        : "%rbx", "%rcx"
     );
 
     return (static_cast<uint64_t>(hi) << 32) bitor lo;
