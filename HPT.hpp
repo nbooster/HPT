@@ -26,24 +26,51 @@ using TimerHMapType = std::unordered_map<std::string, std::unordered_map<size_t,
 
 [[gnu::hot, gnu::always_inline]] inline uint64_t cycle_start(void)
 {
-    _mm_lfence();
+    /*_mm_lfence();
 
     const auto tsc { __rdtsc() };
 
     _mm_lfence();
 
-    return tsc;
+    return tsc;*/
+
+	uint32_t lo, hi;
+
+    asm volatile
+    (
+        "lfence\n\t"
+        "rdtsc\n\t"
+        "lfence\n\t"
+        : "=a"(lo), "=d"(hi)
+    );
+
+    return (static_cast<uint64_t>(hi) << 32) bitor lo;
 }
 
 [[gnu::hot, gnu::always_inline]] inline uint64_t cycle_end(void)
 {
-    unsigned int aux;
+    /*unsigned int aux;
 
     const auto tsc { __rdtscp(std::addressof(aux)) };
 
     _mm_lfence();
 
-    return tsc;
+    return tsc;*/
+
+	uint32_t lo, hi;
+    
+    asm volatile
+    (
+    	"rdtscp\n\t"
+		"mov %%eax, %[lo]\n\t"
+		"mov %%edx, %[hi]\n\t"
+		"cpuid\n\t"
+		: [lo] "=r" (lo), [hi] "=r" (hi)
+		:
+		: "%rax", "%rbx", "%rcx", "%rdx"
+	);
+
+    return (static_cast<uint64_t>(hi) << 32) bitor lo;
 }
 
 template<class T>
@@ -213,6 +240,8 @@ public:
 			#pragma GCC diagnostic ignored "-Wvolatile"
 
 			#endif
+
+			// Warm up the CPU just in case...
 
 			for ( volatile int i = 0; i < 1'000'000; ++i );
 
