@@ -10,9 +10,12 @@ Header Only High Precision Timer Lib for effortless, on the fly, execution time 
 6. Standalone and header only ( only a C++ 20 supporting compiler needed without any extra dependencies ).
 7. Full stat results ( totals, min, median, max, avg, std, 90th, 99th ).
 8. Option to stop and restart the timer inside the code block, and also reset the stats.
+9. Easily turn off the measurements by simply defining the TURN_OFF_MEASUREMENTS constant before including the library.
 
 ## Simplest Example Usage
 ```cpp
+// #define TURN_OFF_MEASUREMENTS
+
 #include "HPT.hpp"
 
 void DummyFunction(size_t N)
