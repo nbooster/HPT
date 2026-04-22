@@ -117,7 +117,7 @@ requires std::is_arithmetic_v<T>
 	return std::string("( ") + formatWithCommasLocal((cycles * 1000) / static_cast<double>(cpuSpeedInMGHz)) + std::string(" nanos )");
 }
 
-[[gnu::cold]] inline void printStatsFromFreqTable(const std::string& name, std::unordered_map<size_t, size_t>& freqTable, const size_t cpuSpeedInMGHz, const size_t zeroCodeCycles, std::ostream& os)
+[[gnu::cold]] inline void printStatsFromFreqTable(const std::string& name, std::unordered_map<size_t, size_t>& freqTable, const size_t cpuSpeedInMGHz, const size_t zeroCodeCycles, std::ostream& os, const std::array<bool, 10>& highlights)
 {
 	if ( freqTable.empty() )
 		return;
@@ -151,7 +151,7 @@ requires std::is_arithmetic_v<T>
 
     const auto minResult { sortedTimeEntries.empty() ? 0 : sortedTimeEntries.cbegin()->first - zeroCodeCycles };
 
-    os << "Min: " << formatWithCommasLocal(minResult) << " cycles " << cyclesToNanosString(static_cast<double>(minResult), cpuSpeedInMGHz) << "\n";
+    os << "Min: " << ( highlights[0] ? "\033[1;32m" : "" ) << formatWithCommasLocal(minResult) << " cycles " << cyclesToNanosString(static_cast<double>(minResult), cpuSpeedInMGHz) << "\033[m\n";
 
     for ( const auto& [nanos, calls] : sortedTimeEntries )
     {
@@ -163,7 +163,7 @@ requires std::is_arithmetic_v<T>
         {
         	const auto medianResult { nanos - zeroCodeCycles };
 
-            os << "\033[" << "1;32" << "m" << "Median: " << formatWithCommasLocal(medianResult) << " cycles " << cyclesToNanosString(static_cast<double>(medianResult), cpuSpeedInMGHz) << "\033[m" << "\n";
+            os << ( highlights[1] ? "\033[1;32m" : "" ) << "Median: " << formatWithCommasLocal(medianResult) << " cycles " << cyclesToNanosString(static_cast<double>(medianResult), cpuSpeedInMGHz) << "\033[m" << "\n";
 
             printMedian = false;
         }
@@ -172,7 +172,7 @@ requires std::is_arithmetic_v<T>
         {
         	const auto nintyPercentileResult { nanos - zeroCodeCycles };
 
-            os << "90th Percentile: " << formatWithCommasLocal(nintyPercentileResult) << " cycles " << cyclesToNanosString(static_cast<double>(nintyPercentileResult), cpuSpeedInMGHz) << "\n";
+            os << ( highlights[2] ? "\033[1;32m" : "" ) << "90th Percentile: " << formatWithCommasLocal(nintyPercentileResult) << " cycles " << cyclesToNanosString(static_cast<double>(nintyPercentileResult), cpuSpeedInMGHz) << "\033[m\n";
 
             print90th = false;
         }
@@ -181,7 +181,7 @@ requires std::is_arithmetic_v<T>
         {
         	const auto nintyNinePercentileResult { nanos - zeroCodeCycles };
 
-            os << "99th Percentile: " << formatWithCommasLocal(nintyNinePercentileResult) << " cycles " << cyclesToNanosString(static_cast<double>(nintyNinePercentileResult), cpuSpeedInMGHz) << "\n";
+            os << ( highlights[3] ? "\033[1;32m" : "" ) << "99th Percentile: " << formatWithCommasLocal(nintyNinePercentileResult) << " cycles " << cyclesToNanosString(static_cast<double>(nintyNinePercentileResult), cpuSpeedInMGHz) << "\033[m\n";
 
             print99th = false;
         }
@@ -189,19 +189,19 @@ requires std::is_arithmetic_v<T>
 
     const auto maxResult { sortedTimeEntries.empty() ? 0 : sortedTimeEntries.crbegin()->first - zeroCodeCycles };
 
-    os << "Max: " << formatWithCommasLocal(maxResult) << " cycles " << cyclesToNanosString(static_cast<double>(maxResult), cpuSpeedInMGHz) << "\n";
+    os << "Max: " << ( highlights[4] ? "\033[1;32m" : "" ) << formatWithCommasLocal(maxResult) << " cycles " << cyclesToNanosString(static_cast<double>(maxResult), cpuSpeedInMGHz) << "\033[m\n";
 
-    os << "Avg: " << formatWithCommasLocal(avg) << " cycles " << cyclesToNanosString(avg, cpuSpeedInMGHz) << "\n";
+    os << "Avg: " << ( highlights[5] ? "\033[1;32m" : "" ) << formatWithCommasLocal(avg) << " cycles " << cyclesToNanosString(avg, cpuSpeedInMGHz) << "\033[m\n";
 
     const auto stdDevResult { std::sqrt(devSum / static_cast<double>(totalCalls)) };
 
-    os << "Std Dev: " << formatWithCommasLocal(stdDevResult) << cyclesToNanosString(stdDevResult, cpuSpeedInMGHz) << "\n";
+    os << ( highlights[6] ? "\033[1;32m" : "" ) << "Std Dev: " << formatWithCommasLocal(stdDevResult) << cyclesToNanosString(stdDevResult, cpuSpeedInMGHz) << "\033[m\n";
 
-    os << "Total: " << formatWithCommasLocal(totalCycles) << " cycles " << cyclesToNanosString(static_cast<double>(totalCycles), cpuSpeedInMGHz) << "\n";
+    os << ( highlights[7] ? "\033[1;32m" : "" ) << "Total: " << formatWithCommasLocal(totalCycles) << " cycles " << cyclesToNanosString(static_cast<double>(totalCycles), cpuSpeedInMGHz) << "\033[m\n";
 
-    os << "Total Calls: " << formatWithCommasLocal(totalCalls) << "\n";
+    os << ( highlights[8] ? "\033[1;32m" : "" ) << "Total Calls: " << formatWithCommasLocal(totalCalls) << "\033[m\n";
 
-    os << "Total Distinct Values: " << formatWithCommasLocal(freqTable.size()) << "\n";
+    os << ( highlights[9] ? "\033[1;32m" : "" ) << "Total Distinct Values: " << formatWithCommasLocal(freqTable.size()) << "\033[m\n";
 
     os << std::endl;
 }
@@ -324,13 +324,41 @@ public:
 		#endif
 	}
 
+	[[gnu::cold]] static void setStatHighlight(const Stats& stat)
+	{
+		#ifndef TURN_OFF_MEASUREMENTS
+
+		Timer::Highlights[std::to_underlying(stat)] = true;
+
+		#endif
+	}
+
+	[[gnu::cold]] static void resetStatHighlight(const Stats& stat)
+	{
+		#ifndef TURN_OFF_MEASUREMENTS
+
+		Timer::Highlights[std::to_underlying(stat)] = false;
+
+		#endif
+	}
+
+	[[gnu::cold]] static void ClearStatHighlights(void)
+	{
+		#ifndef TURN_OFF_MEASUREMENTS
+
+		for ( auto& h : Timer::Highlights )
+			h = false;
+
+		#endif
+	}
+
 	[[gnu::cold]] static void PrintResults(const size_t cpuSpeedInMGHz = 0, const size_t zeroCodeCycles = 0, std::ostream& os = std::cout, const bool printNotes = true)
 	{
 		#ifndef TURN_OFF_MEASUREMENTS
 
 		for ( auto& [name, freqTable] : Timer::FreqTables )
 		{
-			printStatsFromFreqTable(name, freqTable, cpuSpeedInMGHz, zeroCodeCycles, os);
+			printStatsFromFreqTable(name, freqTable, cpuSpeedInMGHz, zeroCodeCycles, os, Timer::Highlights);
 
 			freqTable.clear();
 		}
