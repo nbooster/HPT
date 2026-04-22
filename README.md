@@ -21,7 +21,7 @@ The process is simple:
   2. Make a code change in that block.
   3. Do step 1 again.
   4. See if that code change actually improved the stats you care about.
-  5. If so, then keep that code change in production ( with same setup ) with this ( or similar ) data.
+  5. If so, then keep that code change in production ( with a similar setup ) with this ( or similar ) data.
 
 ## API
 ```cpp
