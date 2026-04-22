@@ -13,6 +13,16 @@ Header Only High Precision Timer Lib for effortless, on the fly, execution time 
 9. Easily turn off the measurements by simply defining the _TURN_OFF_MEASUREMENTS_ constant before including the library.
 10. Can handle an enormous amount of measurements / calls ( it uses frequency tables to store them ).
 
+## Use case
+This lib is best suited for accurate and consistent measuring production code with real world data.
+It is NOT a benchmarking lib (although it can be used for that too).
+The process is simple:
+  1. Measure a specific code block in production with real world data, using the proper setup (see Notes).
+  2. Make a code change in that block.
+  3. Do step 1 again.
+  4. See if that code change actually improved the stats you care about.
+  5. If so, then keep that code change in production ( with same setup ) with this ( or similar ) data.
+
 ## API
 ```cpp
 explicit Timer(const std::string& name = "Generic") noexcept;
