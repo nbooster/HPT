@@ -30,6 +30,9 @@ void start(void) noexcept;
 void stopAndRecord(void);
 static void ClearMeasurements(const std::string& name = "Generic");
 static void ClearAllMeasurements(void);
+static void setStatHighlight(const Stats& stat);
+static void resetStatHighlight(const Stats& stat);
+static void ClearStatHighlights(void);
 static void PrintResults(const size_t cpuSpeedInMGHz = 0, const size_t zeroCodeCycles = 0, std::ostream& os = std::cout, const bool printNotes = true);
 ```
 
