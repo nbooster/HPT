@@ -23,6 +23,9 @@ The process is simple:
   4. See if that code change actually improved the stats you care about.
   5. If so, then keep that code change in production ( with a similar setup ) with this ( or similar ) data.
 
+##Integration
+Just copy the single header file ("HPT.hpp") in your include folder. Then include it in your code.
+
 ## API
 ```cpp
 explicit Timer(const std::string& name = "Generic") noexcept;
