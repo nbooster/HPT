@@ -422,9 +422,13 @@ public:
 	}
 };
 
+#ifndef TURN_OFF_MEASUREMENTS
+
 inline TimerHMapType Timer::FreqTables;
 
 inline std::array<bool, 10> Timer::Highlights = { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+#endif
 
 }; // namespace HPT
 
