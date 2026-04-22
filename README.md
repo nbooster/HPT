@@ -24,7 +24,7 @@ The process is simple:
   5. If so, then keep that code change in production ( with a similar setup ) with this ( or similar ) data.
 
 ## Integration
-Just copy the single header file ("HPT.hpp") in your include folder. Then include it in your code.
+Just copy the single header file ( "HPT.hpp" ) in your include folder. Then include it in your code.
 
 ## API
 ```cpp
