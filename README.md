@@ -39,9 +39,9 @@ static void PrintResults(const size_t cpuSpeedInMGHz = 0, const size_t zeroCodeC
 
 #include "HPT.hpp"
 
-void DummyFunction(size_t N)
+void FunctionToMeasure(size_t N)
 {
-  HPT::Timer T("DummyFunction");
+  HPT::Timer T("FunctionToMeasure");
 
   // any code here...
 }
@@ -49,7 +49,7 @@ void DummyFunction(size_t N)
 int main(void)
 {
   for ( size_t index{}; index < 1'000'000; ++index )
-    DummyFunction(index);
+    FunctionToMeasure(index);
 
   HPT::PrintResults();
 
