@@ -10,6 +10,12 @@ High Precision Timer using only standard C++ 20, and x86 intrinsics.
 
 #define MAX_PRECISION_EXTRA_OVERHEAD
 
+#ifdef LOWER_PRECISION_MIN_OVERHEAD
+
+#undef MAX_PRECISION_EXTRA_OVERHEAD
+
+#endif
+
 #ifndef TURN_OFF_MEASUREMENTS
 
 #include <set>
