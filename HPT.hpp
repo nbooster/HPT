@@ -8,6 +8,8 @@ High Precision Timer using only standard C++ 20, and x86 intrinsics.
 
 */
 
+#define MAX_PRECISION_EXTRA_OVERHEAD
+
 #ifndef TURN_OFF_MEASUREMENTS
 
 #include <set>
@@ -40,7 +42,16 @@ using TimerHMapType = std::unordered_map<std::string, std::unordered_map<size_t,
 
     asm volatile
     (
+        #ifdef MAX_PRECISION_EXTRA_OVERHEAD
+
         "cpuid\n\t"
+
+        #else
+
+        "lfence\n\t"
+
+        #endif
+		
         "rdtsc\n\t"
         "lfence\n\t"
         : "=a"(lo), "=d"(hi)
@@ -68,10 +79,25 @@ using TimerHMapType = std::unordered_map<std::string, std::unordered_map<size_t,
     	"rdtscp\n\t"
 		"mov %%eax, %[lo]\n\t"
 		"mov %%edx, %[hi]\n\t"
-		"cpuid\n\t"
+
+		#ifdef MAX_PRECISION_EXTRA_OVERHEAD
+
+        "cpuid\n\t"
+
+        #else
+
+        "lfence\n\t"
+
+        #endif
+		
 		: [lo] "=r" (lo), [hi] "=r" (hi)
-		:
+
+		#ifdef MAX_PRECISION_EXTRA_OVERHEAD
+
+        :
 		: "%rax", "%rbx", "%rcx", "%rdx"
+
+        #endif
 	);
 
     return (static_cast<uint64_t>(hi) << 32) bitor lo;
