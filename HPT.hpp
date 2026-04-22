@@ -3,7 +3,9 @@
 #pragma once
 
 /*
+
 High Precision Timer using only standard C++ 20, and x86 intrinsics.
+
 */
 
 #ifndef TURN_OFF_MEASUREMENTS
