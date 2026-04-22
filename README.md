@@ -57,6 +57,9 @@ int main(void)
 }
 ```
 
+## Sampe Output (Main Functions Of A Real World Limit Order Book With Real World Data)
+![Project logo](/measurements.bmp)
+
 ## Notes
 1. To get the measurements also in nanoseconds, please provide the positive _'cpuSpeedInMGHz'_ argument in _'PrintResults'_ (assuming CPU has invariant TSC support).
 2. For more accurate results:
