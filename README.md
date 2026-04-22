@@ -2,7 +2,7 @@
 Header Only High Precision Timer Lib for effortless, on the fly, execution time measurements of code blocks, using only standard C++ 20, and x86 intrinsics.
 
 ## Why use it ?
-1. Ultra precise measurements ( cycle level precision ).
+1. Cycle level precision measurements ( define _LOWER_PRECISION_MIN_OVERHEAD_ before including the library to get that behaviour ( tiny difference) ).
 2. Independent of underlying Hardware ( because the measurements are in cycles ).
 3. Option to display the results also in nanos ( if the user provides the actual CPU speed clock on the running core ).
 4. Effortless usage ( just add: _HPT::Timer T("Code Block Name");_ at the start of any code block ).
