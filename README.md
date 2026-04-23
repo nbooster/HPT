@@ -3,7 +3,7 @@ Header Only High Precision Timer Lib for effortless, on the fly, execution time 
 
 ## Why use it ?
 1. Cycle level precision measurements ( define _LOWER_PRECISION_MIN_OVERHEAD_ before including the library to get that behaviour ( tiny difference) ).
-2. Independent of underlying Hardware ( because the measurements are in cycles ).
+2. Independent of underlying CPU clock speed ( because the measurements are in cycles ).
 3. Option to display the results also in nanos ( if the user provides the actual CPU speed clock on the running core ).
 4. Effortless usage ( just add: _HPT::Timer T("Code Block Name");_ at the start of any code block ).
 5. Ultra light ( negligible overhead of time ( like 0 - 4 cycles avg on a modern CPU ) and space ).
