@@ -64,6 +64,48 @@ int main(void)
 ```
 
 ## Sampe Output (Main Functions Of A Real World Limit Order Book With Real World Data)
+```bash
+Execute
+
+Min: 112 cycles ( 33.93 nanos )
+Median: 210 cycles ( 63.63 nanos )
+90th Percentile: 424 cycles ( 128.48 nanos )
+99th Percentile: 738 cycles ( 223.63 nanos )
+Max: 10,536 cycles ( 3,192.72 nanos )
+Avg: 253.98 cycles ( 76.96 nanos )
+Std Dev: 156.34( 47.37 nanos )
+Total: 367,237,470 cycles ( 111,284,081.81 nanos )
+Total Calls: 1,445,888
+Total Distinct Values: 1,162
+
+
+Delete
+
+Min: 112 cycles ( 33.93 nanos )
+Median: 162 cycles ( 49.09 nanos )
+90th Percentile: 238 cycles ( 72.12 nanos )
+99th Percentile: 452 cycles ( 136.96 nanos )
+Max: 39,490 cycles ( 11,966.66 nanos )
+Avg: 181.32 cycles ( 54.94 nanos )
+Std Dev: 81.65( 24.74 nanos )
+Total: 3,623,896,316 cycles ( 1,098,150,398.78 nanos )
+Total Calls: 19,985,898
+Total Distinct Values: 1,608
+
+
+Insert
+
+Min: 122 cycles ( 36.96 nanos )
+Median: 164 cycles ( 49.69 nanos )
+90th Percentile: 246 cycles ( 74.54 nanos )
+99th Percentile: 1,094 cycles ( 331.51 nanos )
+Max: 711,847,302 cycles ( 215,711,303.63 nanos )
+Avg: 315.17 cycles ( 95.50 nanos )
+Std Dev: 155,052.46( 46,985.59 nanos )
+Total: 6,718,810,974 cycles ( 2,036,003,325.45 nanos )
+Total Calls: 21,317,812
+Total Distinct Values: 9,439
+```
 ![Project logo](/measurements.jpg)
 
 ## Notes
