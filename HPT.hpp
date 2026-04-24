@@ -36,7 +36,51 @@ using TimerHMapType = std::unordered_map<std::string, std::unordered_map<size_t,
 
 [[gnu::hot, gnu::always_inline]] inline uint64_t cycle_start(void)
 {
-    /*_mm_lfence();
+	#ifdef MAX_PRECISION_EXTRA_OVERHEAD
+
+    uint32_t eax, ebx, ecx, edx;
+
+    asm volatile
+    (
+        "cpuid"
+        : "=a"(eax), "=b"(ebx), "=c"(ecx), "=d"(edx)
+        : "a"(0) 
+        : "memory"
+    );
+
+    uint32_t cycles_low, cycles_high;
+
+    asm volatile
+    (
+        "rdtsc"
+        : "=a"(cycles_low), "=d"(cycles_high)
+    );
+
+    asm volatile
+    (
+        "cpuid"
+        : "=a"(eax), "=b"(ebx), "=c"(ecx), "=d"(edx)
+        : "a"(0) 
+        : "memory"
+    );
+
+    return ( static_cast<uint64_t>(cycles_high) << 32 ) bitor cycles_low;
+
+    #else
+
+    uint32_t cycles_low, cycles_high;
+    
+    asm volatile 
+    (
+    	"lfence\n\t"
+        "rdtsc\n\t"
+        "lfence\n\t"
+        : "=a" (cycles_low), "=d" (cycles_high)
+    );
+    
+    return ( static_cast<uint64_t>(cycles_high) << 32 ) bitor cycles_low;
+
+	/*_mm_lfence();
 
     const auto tsc { __rdtsc() };
 
@@ -44,33 +88,51 @@ using TimerHMapType = std::unordered_map<std::string, std::unordered_map<size_t,
 
     return tsc;*/
 
-	uint32_t lo, hi;
-
-    asm volatile
-    (
-        #ifdef MAX_PRECISION_EXTRA_OVERHEAD
-
-        "cpuid\n\t"
-
-        #else
-
-        "lfence\n\t"
-
-        #endif
-		
-        "rdtsc\n\t"
-        "lfence\n\t"
-        : "=a"(lo), "=d"(hi)
-        :
-        : "%rbx", "%rcx"
-    );
-
-    return (static_cast<uint64_t>(hi) << 32) bitor lo;
+    #endif
 }
 
 [[gnu::hot, gnu::always_inline]] inline uint64_t cycle_end(void)
 {
-    /*unsigned int aux;
+	#ifdef MAX_PRECISION_EXTRA_OVERHEAD
+
+    uint32_t cycles_low, cycles_high, tscp_aux;
+    
+    asm volatile 
+    (
+        "rdtscp"
+        : "=a"(cycles_low), "=d"(cycles_high), "=c"(tscp_aux)
+        : : "memory"
+    );
+
+    uint32_t eax, ebx, ecx, edx;
+
+    asm volatile
+    (
+    	//"xor %%eax, %%eax\n\t"
+        "cpuid"
+        : "=a"(eax), "=b"(ebx), "=c"(ecx), "=d"(edx)
+        : "a"(0)
+        : "memory"
+    );
+
+    return ( static_cast<uint64_t>(cycles_high) << 32 ) bitor cycles_low;
+
+    #else
+
+    uint32_t cycles_low, cycles_high;
+
+    asm volatile
+    (
+    	"rdtscp\n\t"
+		"mov %%eax, %[cycles_low]\n\t"
+		"mov %%edx, %[cycles_high]\n\t"
+        "lfence\n\t"
+		: [cycles_low] "=r" (cycles_low), [cycles_high] "=r" (cycles_high)
+	);
+
+    return ( static_cast<uint64_t>(cycles_high) << 32 ) bitor cycles_low;
+
+	/*unsigned int aux;
 
     const auto tsc { __rdtscp(std::addressof(aux)) };
 
@@ -78,35 +140,7 @@ using TimerHMapType = std::unordered_map<std::string, std::unordered_map<size_t,
 
     return tsc;*/
 
-	uint32_t lo, hi;
-    
-    asm volatile
-    (
-    	"rdtscp\n\t"
-		"mov %%eax, %[lo]\n\t"
-		"mov %%edx, %[hi]\n\t"
-
-		#ifdef MAX_PRECISION_EXTRA_OVERHEAD
-
-        "cpuid\n\t"
-
-        #else
-
-        "lfence\n\t"
-
-        #endif
-		
-		: [lo] "=r" (lo), [hi] "=r" (hi)
-
-		#ifdef MAX_PRECISION_EXTRA_OVERHEAD
-
-        :
-		: "%rax", "%rbx", "%rcx", "%rdx"
-
-        #endif
-	);
-
-    return (static_cast<uint64_t>(hi) << 32) bitor lo;
+    #endif
 }
 
 template<class T>
