@@ -438,7 +438,8 @@ public:
 
 			os << 
 			"\n\n*To get the measurements also in nanoseconds,\n please provide the positive 'cpuSpeedInMGHz' argument in 'PrintResults' (assuming CPU has invariant TSC support).\n"
-			"\n\n**For more accurate results: "
+			"\n\n**To find the actuall CPU speed of a core, run this on Linux: watch -n.1 \"grep \"^[c]pu MHz\" /proc/cpuinfo\""
+			"\n\n***For more accurate results: "
 			"\n  do not perform nested measurements,"
 			"\n  measure only from one thread,"
 			"\n  provide the 'zeroCodeCycles' (measurement of an empty code block) argument in 'PrintResults',"
