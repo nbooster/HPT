@@ -2,16 +2,16 @@
 Header Only High Precision Timer Lib for effortless, on the fly, execution time measurements of code blocks, using only standard C++ 20, and x86 intrinsics.
 
 ## Why use it ?
-1. Cycle level precision measurements ( define _LOWER_PRECISION_MIN_OVERHEAD_ before including the library to get that behaviour ( tiny difference) ).
-2. Independent of underlying CPU clock speed ( because the measurements are in cycles ).
-3. Option to display the results also in nanos ( if the user provides the actual CPU speed clock on the running core ).
-4. Effortless usage ( just add: _HPT::Timer T("Code Block Name");_ at the start of any code block ).
-5. Ultra light ( negligible overhead of time ( like 70 - 74 cycles avg on a modern CPU ) and space ).
-6. Standalone and header only ( only a C++ 20 supporting compiler needed without any extra dependencies ).
-7. Full stat results ( totals, min, median, max, avg, std, 90th, 99th ).
-8. Option to stop and restart the timer inside the code block, and also reset the stats.
-9. Easily turn off the measurements by simply defining the _TURN_OFF_MEASUREMENTS_ constant before including the library.
-10. Can handle an enormous amount of measurements / calls ( it uses frequency tables to store them ).
+1. **Cycle level precision measurements** ( define _LOWER_PRECISION_MIN_OVERHEAD_ before including the library to get that behaviour ( tiny difference) ).
+2. **Independent of underlying CPU clock speed** ( because the measurements are in cycles ).
+3. **Option to display the results also in nanos** ( if the user provides the actual CPU speed clock on the running core ).
+4. **Effortless usage** ( just add: _HPT::Timer T("Code Block Name");_ at the start of any code block ).
+5. **Ultra light** ( negligible overhead of time ( like 70 - 74 cycles avg on a modern CPU ) and space ).
+6. **Standalone and header only** ( only a C++ 20 supporting compiler needed without any extra dependencies ).
+7. **Full stat results** ( totals, min, median, max, avg, std, 90th, 99th ).
+8. **Option to stop and restart the timer inside the code block, and also reset the stats.**
+9. **Easily turn off the measurements by simply defining the _TURN_OFF_MEASUREMENTS_ constant before including the library.**
+10. **Can handle an enormous amount of measurements / calls** ( it uses frequency tables to store them ).
 
 ## Use case
 This lib is best suited for accurate and consistent measuring production code with real world data.
