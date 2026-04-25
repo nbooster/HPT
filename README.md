@@ -66,7 +66,7 @@ int main(void)
 }
 ```
 
-## Sampe Output (Main Functions Of A Real World Limit Order Book With Real World Data)
+## Sampe Output (Main Functions Of A Limit Order Book With Real World Data)
 ![Project logo](/measurements.jpg)
 
 ## Notes
