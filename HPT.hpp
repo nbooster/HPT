@@ -190,7 +190,7 @@ requires std::is_arithmetic_v<T>
 	if ( freqTable.empty() )
 		return;
 
-	os << "\033[" << "1;4;33" << "m" << "\n" << name << "\033[m" << "\n\n";
+	os << "\033[" << "1;4;33" << "m" << "\n" << name << "\033[m" << ( cpuSpeedInMGHz not_eq 0 ? "\033[1;33m ( " + formatWithCommasLocal(cpuSpeedInMGHz) + " MGHz )\033[m" : "" ) << "\n\n";
 
 	size_t totalCycles { 0 }, totalCalls { 0 }, callsSoFar { 0 };
 
