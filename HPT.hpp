@@ -263,7 +263,7 @@ requires std::is_arithmetic_v<T>
 
     const auto stdDevResult { std::sqrt(devSum / static_cast<double>(totalCalls)) };
 
-    os << ( highlights[6] ? "\033[1;32m" : "" ) << "Std Dev: " << formatWithCommasLocal(stdDevResult) << cyclesToNanosString(stdDevResult, cpuSpeedInMGHz) << "\033[m\n";
+    os << ( highlights[6] ? "\033[1;32m" : "" ) << "Std Dev: " << formatWithCommasLocal(stdDevResult) << " cycles " << cyclesToNanosString(stdDevResult, cpuSpeedInMGHz) << "\033[m\n";
 
     os << ( highlights[7] ? "\033[1;32m" : "" ) << "Total: " << formatWithCommasLocal(totalCycles) << " cycles " << cyclesToNanosString(static_cast<double>(totalCycles), cpuSpeedInMGHz) << "\033[m\n";
 
