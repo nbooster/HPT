@@ -373,6 +373,16 @@ public:
 		#endif
 	}
 
+	[[gnu::cold]] const std::string& getName(void) const noexcept
+    {
+        return this->name;
+    }
+
+    [[gnu::cold]] void setName(const std::string& name)
+    {
+        this->name = name;
+    }
+
 	[[gnu::cold]] static void ClearMeasurements(const std::string& name = "Generic")
 	{
 		#ifndef TURN_OFF_MEASUREMENTS
