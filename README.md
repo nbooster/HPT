@@ -38,7 +38,8 @@ static void ClearAllMeasurements(void);
 static void setStatHighlight(const Stats& stat);
 static void resetStatHighlight(const Stats& stat);
 static void ClearStatHighlights(void);
-static void PrintResults(const size_t cpuSpeedInMGHz = 0, const size_t zeroCodeCycles = 0, std::ostream& os = std::cout, const bool printNotes = true);
+static void PrintResults(const size_t cpuSpeedInMGHz = 0, const size_t zeroCodeCycles = 0, std::ostream& os = std::cout);
+static void printNotes(std::ostream& os = std::cout) noexcept;
 ```
 
 ## Simplest Example Usage
@@ -70,7 +71,8 @@ int main(void)
 
 ## Notes
 1. To get the measurements also in nanoseconds, please provide the positive _'cpuSpeedInMGHz'_ argument in _'PrintResults'_ (assuming CPU has invariant TSC support).
-2. To find the actual real time speed in MHz, of all CPU cores, run this on Linux:
+2. Make sure 'PrintResults' is called only once, after all the measured code blocks have executed, to avoid conflicts.
+3. To find the actual real time speed in MHz, of all CPU cores, run this on Linux:
 
    _watch -n.1 "grep \"^[c]pu MHz\" /proc/cpuinfo"_
 4. For more accurate results:
