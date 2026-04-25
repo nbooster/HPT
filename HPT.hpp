@@ -430,7 +430,7 @@ public:
 		#endif
 	}
 
-	[[gnu::cold]] static void PrintResults(const size_t cpuSpeedInMGHz = 0, const size_t zeroCodeCycles = 0, std::ostream& os = std::cout, const bool printNotes = true)
+	[[gnu::cold]] static void PrintResults(const size_t cpuSpeedInMGHz = 0, const size_t zeroCodeCycles = 0, std::ostream& os = std::cout)
 	{
 		#ifndef TURN_OFF_MEASUREMENTS
 
@@ -441,30 +441,27 @@ public:
 			freqTable.clear();
 		}
 
-		[[maybe_unused]] static const bool _ = [&os, printNotes]
-		{
-			if ( not printNotes )
-				return false;
+        #endif
+    }
 
-			os << 
-			"\n\n*To get the measurements also in nanoseconds,\n please provide the positive 'cpuSpeedInMGHz' argument in 'PrintResults' (assuming CPU has invariant TSC support)."
-			"\n\n**To find the actuall CPU speed of a core, run this on Linux: watch -n.1 \"grep \\\"^[c]pu MHz\\\" /proc/cpuinfo\""
-			"\n\n***For more accurate results: "
-			"\n  do not perform nested measurements,"
-			"\n  measure only from one thread,"
-			"\n  provide the 'zeroCodeCycles' (measurement of an empty code block) argument in 'PrintResults',"
-			"\n  measure as few code blocks as possible at the same time,"
-			"\n  keep the measured block names as short as possible (SSO),"
-			"\n  disable hyperthreading,"
-			"\n  make sure the measuring thread was pinned to an isolated CPU core throughout the measuring period,"
-			"\n  with the highest priority,"
-			"\n  and keep running your benchmarks on the same core for consistency.\n\n";
-
-			return false; 
-		}();
-
-		#endif
-	}
+    [[gnu::cold]] static void printNotes(std::ostream& os = std::cout) noexcept
+    {
+		os << 
+        "\n\n*To get the measurements also in nanoseconds,\n please provide the positive 'cpuSpeedInMGHz' argument in 'PrintResults' (assuming CPU has invariant TSC support)."
+        "\n\n**To find the actuall CPU speed of a core, run this on Linux: watch -n.1 \"grep \\\"^[c]pu MHz\\\" /proc/cpuinfo\""
+        "\n\n***Make sure 'PrintResults' is called only once, after the all the measured code blocks have executed."
+        "\n\n****For more accurate results: "
+        "\n  do not perform nested measurements,"
+        "\n  measure only from one thread,"
+        "\n  provide the 'zeroCodeCycles' (measurement of an empty code block) argument in 'PrintResults',"
+        "\n  measure as few code blocks as possible at the same time,"
+        "\n  keep the measured block names as short as possible (SSO),"
+        "\n  disable hyperthreading,"
+        "\n  disable turbo boost and force the 'performance' governor,"
+        "\n  make sure the measuring thread was pinned to an isolated CPU core throughout the measuring period,"
+        "\n  with the highest priority,"
+        "\n  and keep running your benchmarks on the same core for consistency.\n\n";
+    }
 };
 
 #ifndef TURN_OFF_MEASUREMENTS
