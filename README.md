@@ -68,7 +68,7 @@ int main(void)
 
 ## Notes
 1. To get the measurements also in nanoseconds, please provide the positive _'cpuSpeedInMGHz'_ argument in _'PrintResults'_ (assuming CPU has invariant TSC support).
-2. To find the actual CPU speed of a core, run this on Linux:  _watch -n.1 "grep \"^[c]pu MHz\" /proc/cpuinfo"_
+2. To find the actual real time speed in MHz, of all CPU cores, run this on Linux:  _watch -n.1 "grep \"^[c]pu MHz\" /proc/cpuinfo"_
 3. For more accurate results:
    1. Do not perform nested measurements.
    2. Measure only from one thread.
