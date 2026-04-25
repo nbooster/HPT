@@ -1,5 +1,5 @@
 # HPT
-Header Only High Precision Timer Lib for effortless, on the fly, execution time measurements of code blocks, using only standard C++ 20, and x86 intrinsics.
+Header-only High Precision Timer lib for effortless, on the fly, execution time measurements of code blocks, using only standard C++ 20, and x86 intrinsics.
 
 ## Why use it ?
 1. **Cycle level precision measurements** ( define _LOWER_PRECISION_MIN_OVERHEAD_ before including the library to get that behaviour ( tiny difference) ).
