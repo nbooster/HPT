@@ -33,12 +33,12 @@ void start(void) noexcept;
 void stopAndRecord(void);
 void setName(const std::string& name);
 const std::string& getName(void) const noexcept;
-static void ClearMeasurements(const std::string& name = "Generic");
-static void ClearAllMeasurements(void);
+static void clearMeasurements(const std::string& name = "Generic");
+static void clearAllMeasurements(void);
 static void setStatHighlight(const Stats& stat);
 static void resetStatHighlight(const Stats& stat);
-static void ClearStatHighlights(void);
-static void PrintResults(const size_t cpuSpeedInMGHz = 0, const size_t zeroCodeCycles = 0, std::ostream& os = std::cout);
+static void clearStatHighlights(void);
+static void printResults(const size_t cpuSpeedInMGHz = 0, const size_t zeroCodeCycles = 0, std::ostream& os = std::cout);
 static void printNotes(std::ostream& os = std::cout) noexcept;
 ```
 
