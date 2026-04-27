@@ -383,7 +383,7 @@ public:
         this->name = name;
     }
 
-	[[gnu::cold]] static void ClearMeasurements(const std::string& name = "Generic")
+	[[gnu::cold]] static void clearMeasurements(const std::string& name = "Generic")
 	{
 		#ifndef TURN_OFF_MEASUREMENTS
 
@@ -392,7 +392,7 @@ public:
 		#endif
 	}
 
-	[[gnu::cold]] static void ClearAllMeasurements(void)
+	[[gnu::cold]] static void clearAllMeasurements(void)
 	{
 		#ifndef TURN_OFF_MEASUREMENTS
 
@@ -420,7 +420,7 @@ public:
 		#endif
 	}
 
-	[[gnu::cold]] static void ClearStatHighlights(void)
+	[[gnu::cold]] static void clearStatHighlights(void)
 	{
 		#ifndef TURN_OFF_MEASUREMENTS
 
@@ -430,7 +430,7 @@ public:
 		#endif
 	}
 
-	[[gnu::cold]] static void PrintResults(const size_t cpuSpeedInMGHz = 0, const size_t zeroCodeCycles = 0, std::ostream& os = std::cout)
+	[[gnu::cold]] static void printResults(const size_t cpuSpeedInMGHz = 0, const size_t zeroCodeCycles = 0, std::ostream& os = std::cout)
 	{
 		#ifndef TURN_OFF_MEASUREMENTS
 
