@@ -75,7 +75,7 @@ int main(void)
 3. To find the actual real time speed in MHz, of all CPU cores, run this on Linux:
 
    _watch -n.1 "grep \"^[c]pu MHz\" /proc/cpuinfo"_
-4. To get the exact invariant TSC frequency (that is what you put as input to get the nanos) on Linux run:
+4. To get the exact invariant TSC frequency (that is what you put as _'cpuSpeedInMGHz'_ in _'PrintResults'_ to get the nanos) on Linux run:
    
    _dmesg | grep -i tsc_
    
