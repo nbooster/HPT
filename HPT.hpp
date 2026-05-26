@@ -466,9 +466,9 @@ public:
 
 #ifndef TURN_OFF_MEASUREMENTS
 
-inline TimerHMapType Timer::FreqTables;
+inline thread_local TimerHMapType Timer::FreqTables;
 
-inline std::array<bool, 10> Timer::Highlights = { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 };
+inline thread_local std::array<bool, 10> Timer::Highlights = { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 };
 
 #endif
 
