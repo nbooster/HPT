@@ -79,7 +79,7 @@ int main(void)
    
    _dmesg | grep -i tsc_
    
-   ...and look for the NUMBER on the line: "tsc: Refined TSC clocksource calibration: NUMBER MHz".
+   ...and look for the NUMBER on the line: _"tsc: Refined TSC clocksource calibration: NUMBER MHz"_.
 5. For more accurate results:
    1. Do not perform nested measurements.
    2. Measure only from one thread.
