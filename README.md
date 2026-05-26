@@ -76,9 +76,11 @@ int main(void)
 
    _watch -n.1 "grep \"^[c]pu MHz\" /proc/cpuinfo"_
 4. To get the exact invariant TSC frequency (that is what you put as input to get the nanos) on Linux run:
+   
    _dmesg | grep -i tsc_
+   
    ...and look for the NUMBER on the line: "tsc: Refined TSC clocksource calibration: NUMBER MHz".
-6. For more accurate results:
+5. For more accurate results:
    1. Do not perform nested measurements.
    2. Measure only from one thread.
    3. Provide the _'zeroCodeCycles'_ (measurement of an empty code block) argument in _'PrintResults'_.
