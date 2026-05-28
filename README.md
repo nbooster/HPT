@@ -14,7 +14,12 @@ Header-only High Precision Timer lib for effortless, on the fly, execution time 
 10. **Can handle an enormous amount of measurements / calls** ( it uses frequency tables to store them ).
 
 ## Use case
-This lib is best suited for accurate and consistent measuring production code with real world data.
+On modern CPUs, with out-of-order execution, deep instruction pipelines, speculative execution, caching, thermal throttling, and OS interrupts, 
+deterministic cycle counts of a specific general piece of code are practically impossible.
+Even reading the Invariant Time Stamp Counter (TSC) itself introduces a variable overhead (usually between 20 to 50 cycles).
+
+This lib is the best effort for accurate and consistent measuring production code with real world data, with the easiest API possible.
+
 It is NOT a benchmarking lib (although it can be used for that too).
 The process is simple:
   1. Measure a specific code block in production with real world data, using the proper setup ( see Notes ).
@@ -90,4 +95,4 @@ int main(void)
    7. Disable turbo boost and force the _'performance'_ governor.
    8. Make sure the measuring thread has the highest priority and is pinned to an isolated CPU core throughout the measuring period.
    9. Keep running your benchmarks on the same core for consistency.
-6. Avg difference from true value: 0 - 4 cycles.
+6. Avg difference from true value: 0 - 5 cycles.
