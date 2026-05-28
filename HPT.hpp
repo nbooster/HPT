@@ -177,15 +177,15 @@ requires std::is_arithmetic_v<T>
     return result.back() == '.' ? result.substr(0, result.size() - 1) : result ;
 }
 
-[[gnu::cold]] inline std::string cyclesToNanosString(const double& cycles, const size_t cpuSpeedInMGHz)
+[[gnu::cold]] inline std::string cyclesToNanosString(const double& cycles, const double cpuSpeedInMGHz)
 {
 	if ( cpuSpeedInMGHz == 0 )
 		return "";
 
-	return std::string("( ") + formatWithCommasLocal((cycles * 1000) / static_cast<double>(cpuSpeedInMGHz)) + std::string(" nanos )");
+	return std::string("( ") + formatWithCommasLocal((cycles * 1000) / cpuSpeedInMGHz) + std::string(" nanos )");
 }
 
-[[gnu::cold]] inline void printStatsFromFreqTable(const std::string& name, std::unordered_map<size_t, size_t>& freqTable, const size_t cpuSpeedInMGHz, const size_t zeroCodeCycles, std::ostream& os, const std::array<bool, 10>& highlights)
+[[gnu::cold]] inline void printStatsFromFreqTable(const std::string& name, std::unordered_map<size_t, size_t>& freqTable, const double cpuSpeedInMGHz, const size_t zeroCodeCycles, std::ostream& os, const std::array<bool, 10>& highlights)
 {
 	if ( freqTable.empty() )
 		return;
@@ -430,7 +430,7 @@ public:
 		#endif
 	}
 
-	[[gnu::cold]] static void printResults(const size_t cpuSpeedInMGHz = 0, const size_t zeroCodeCycles = 0, std::ostream& os = std::cout)
+	[[gnu::cold]] static void printResults(const double cpuSpeedInMGHz = 0, const size_t zeroCodeCycles = 0, std::ostream& os = std::cout)
 	{
 		#ifndef TURN_OFF_MEASUREMENTS
 
