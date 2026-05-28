@@ -18,7 +18,7 @@ On modern CPUs, with out-of-order execution, deep instruction pipelines, specula
 deterministic cycle counts of a specific general piece of code are practically impossible.
 Even reading the Invariant Time Stamp Counter (TSC) itself introduces a variable overhead (usually between 20 to 50 cycles).
 
-This lib is the best effort for accurate and consistent measuring production code with real world data, with the easiest API possible.
+This lib is the best effort for accurate and consistent measuring production code with real world data, via an easy API.
 
 It is NOT a benchmarking lib (although it can be used for that too).
 The process is simple:
