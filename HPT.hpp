@@ -22,7 +22,7 @@ High Precision Timer using only standard C++ 20, and x86 intrinsics.
 #include <cmath>
 #include <string>
 #include <iostream>
-#include <unordered_map>
+#include <unordered_map> // <-- Can be replaced with boost::unordered_flat_map with a fast pool allocator for even faster processing.
 #include <x86gprintrin.h>
 
 #endif
