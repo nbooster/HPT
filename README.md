@@ -95,4 +95,3 @@ int main(void)
    7. Disable turbo boost and force the _'performance'_ governor.
    8. Make sure the measuring thread has the highest priority and is pinned to an "isolated" CPU core (isolcpus + nohz_full + rcu_nocbs + irq_affinity) throughout the measuring period.
    9. Keep running your benchmarks on the same core for consistency.
-6. Avg variance between different measurements of the same code with the same data and setup: 0 - 4 cycles.
