@@ -22,6 +22,7 @@ High Precision Timer using only standard C++ 20, and x86 intrinsics.
 #include <cmath>
 #include <string>
 #include <iostream>
+#include <utility>
 #include <unordered_map> // <-- Can be replaced with boost::unordered_flat_map with a fast pool allocator for even faster processing.
 #include <x86gprintrin.h>
 
@@ -142,6 +143,20 @@ using TimerHMapType = std::unordered_map<std::string, std::unordered_map<size_t,
 
     #endif
 }
+
+enum class Stats : uint8_t
+{
+	Mininmum = 0,
+	Median = 1,
+	Percentile90 = 2,
+	Percentile99 = 3,
+	Maximum = 4,
+	Average = 5,
+	StandardDeviation = 6,
+	Total = 7,
+	Calls = 8,
+	DistinctValues = 9
+};
 
 template<class T>
 requires std::is_arithmetic_v<T> 
@@ -280,6 +295,8 @@ class Timer final
 {
 	#ifndef TURN_OFF_MEASUREMENTS
 
+	static std::array<bool, 10> Highlights;
+
 	static std::unordered_map<std::string, std::unordered_map<size_t, size_t>> FreqTables;
 
 	std::string name;
@@ -337,7 +354,7 @@ public:
 
 		[[maybe_unused]] static const bool _ = []
 		{
-			Timer::ClearAllMeasurements();
+			Timer::clearAllMeasurements();
 
 			return false; 
 		}();
@@ -466,9 +483,9 @@ public:
 
 #ifndef TURN_OFF_MEASUREMENTS
 
-inline thread_local TimerHMapType Timer::FreqTables;
+inline TimerHMapType Timer::FreqTables;
 
-inline thread_local std::array<bool, 10> Timer::Highlights = { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 };
+inline std::array<bool, 10> Timer::Highlights = { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 };
 
 #endif
 
