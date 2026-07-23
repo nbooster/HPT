@@ -295,9 +295,9 @@ class Timer final
 {
 	#ifndef TURN_OFF_MEASUREMENTS
 
-	static std::array<bool, 10> Highlights;
+	inline static std::array<bool, 10> Highlights = { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-	static std::unordered_map<std::string, std::unordered_map<size_t, size_t>> FreqTables;
+	inline static std::unordered_map<std::string, std::unordered_map<size_t, size_t>> FreqTables;
 
 	std::string name;
 
@@ -480,14 +480,6 @@ public:
         "\n  and keep running your benchmarks on the same core for consistency.\n\n";
     }
 };
-
-#ifndef TURN_OFF_MEASUREMENTS
-
-inline TimerHMapType Timer::FreqTables;
-
-inline std::array<bool, 10> Timer::Highlights = { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 };
-
-#endif
 
 }; // namespace HPT
 
