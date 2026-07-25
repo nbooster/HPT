@@ -376,6 +376,15 @@ public:
 		#endif
 	}
 
+	[[gnu::hot, gnu::always_inline]] inline void stop(void)
+    {
+        #ifndef TURN_OFF_MEASUREMENTS
+
+        this->timerStopped = true;
+
+        #endif
+    }
+
 	[[gnu::hot, gnu::always_inline]] inline void stopAndRecord(void)
 	{
 		#ifndef TURN_OFF_MEASUREMENTS
