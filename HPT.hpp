@@ -301,6 +301,8 @@ class Timer final
 
 	std::string name;
 
+	ssize_t cached;
+
 	bool timerStopped;
 
 	size_t timeStampStart;
@@ -313,7 +315,7 @@ public:
 
 	#ifndef TURN_OFF_MEASUREMENTS
 
-	:name{ name }, timerStopped{ false }, timeStampStart{ cycle_start() }
+	:name{ name }, cached{ 0 }, timerStopped{ false }, timeStampStart{ cycle_start() }
 
 	#endif
 	{
@@ -398,6 +400,35 @@ public:
 
 		#endif
 	}
+
+	[[gnu::hot, gnu::always_inline]] inline void resetCached(void) noexcept
+    {
+        this->cached = 0;
+    }
+
+    [[gnu::hot, gnu::always_inline]] inline void stopAndCache(void) noexcept
+    {
+        #ifndef TURN_OFF_MEASUREMENTS
+
+        const auto timeStampEnd { cycle_end() };
+
+        if ( not this->timerStopped ) [[likely]]
+            this->cached = timeStampEnd - this->timeStampStart;
+
+        this->timerStopped = true;
+
+        #endif
+    }
+
+    [[gnu::hot, gnu::always_inline]] inline void addToCached(const ssize_t count) noexcept
+    {
+        Timer::FreqTables[this->name][this->cached] += count;
+    }
+
+    [[gnu::hot, gnu::always_inline]] inline void addToCachedAveraged(const ssize_t count) noexcept
+    {
+        Timer::FreqTables[this->name][this->cached / count] += count;
+    }
 
 	[[gnu::cold]] const std::string& getName(void) const noexcept
     {
