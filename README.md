@@ -36,8 +36,12 @@ Just copy the single header file ( _HPT.hpp_ ) in your include folder. Then incl
 explicit Timer(const std::string& name = "Generic") noexcept;
 void start(void) noexcept;
 void stopAndRecord(void);
-void setName(const std::string& name);
+void resetCached(void) noexcept;
+void stopAndCache(void) noexcept;
+void addToCached(const ssize_t count) noexcept;
+void addToCachedAveraged(const ssize_t count) noexcept;
 const std::string& getName(void) const noexcept;
+void setName(const std::string& name);
 static void clearMeasurements(const std::string& name = "Generic");
 static void clearAllMeasurements(void);
 static void setStatHighlight(const Stats& stat);
