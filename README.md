@@ -71,7 +71,7 @@ int main(void)
 
   HPT::PrintResults();
 
-  std::exit(EXIT_SUCCESS);
+  return EXIT_SUCCESS;
 }
 ```
 
