@@ -403,7 +403,11 @@ public:
 
 	[[gnu::hot, gnu::always_inline]] inline void resetCached(void) noexcept
     {
+        #ifndef TURN_OFF_MEASUREMENTS
+
         this->cached = 0;
+
+        #endif
     }
 
     [[gnu::hot, gnu::always_inline]] inline void stopAndCache(void) noexcept
@@ -422,22 +426,34 @@ public:
 
     [[gnu::hot, gnu::always_inline]] inline void addToCached(const ssize_t count) noexcept
     {
+        #ifndef TURN_OFF_MEASUREMENTS
+
         Timer::FreqTables[this->name][this->cached] += count;
+
+        #endif
     }
 
     [[gnu::hot, gnu::always_inline]] inline void addToCachedAveraged(const ssize_t count) noexcept
     {
+        #ifndef TURN_OFF_MEASUREMENTS
+
         Timer::FreqTables[this->name][this->cached / count] += count;
+
+        #endif
     }
 
-	[[gnu::cold]] const std::string& getName(void) const noexcept
+    [[gnu::cold]] const std::string& getName(void) const noexcept
     {
         return this->name;
     }
 
     [[gnu::cold]] void setName(const std::string& name)
     {
+        #ifndef TURN_OFF_MEASUREMENTS
+
         this->name = name;
+
+        #endif
     }
 
 	[[gnu::cold]] static void clearMeasurements(const std::string& name = "Generic")
